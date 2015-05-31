@@ -15,6 +15,7 @@
     			<th>Price</th>
     			<th>Featured</th>
     			<th>Recommended</th>
+    			<th>Category</th>
     			<th>Action</th>
     		</tr>
     	</thead>
@@ -27,11 +28,13 @@
                     <td>{{ $product->price }}</td>
                     <td>{{ ($product->featured)?'Yes':'No' }}</td>
                     <td>{{ ($product->recommend)?'Yes':'No' }}</td>
+                    <td>{{ $product->category->name }}</td>
                     <td><a href="{{ route('product_edit', $product->id) }}" class="btn btn-default">Edit</a> <a href="{{ route('product_delete', $product->id) }}" class="btn btn-default">Delete</a></td>
                 </tr>
             @endforeach
 
     	</tbody>
     </table>
+    {!! $products->render() !!}
 
 @endsection
