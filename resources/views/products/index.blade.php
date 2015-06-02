@@ -29,7 +29,7 @@
                     <td>{{ ($product->featured)?'Yes':'No' }}</td>
                     <td>{{ ($product->recommend)?'Yes':'No' }}</td>
                     <td>{{ $product->category->name }}</td>
-                    <td><a href="{{ route('product_edit', $product->id) }}" class="btn btn-default">Edit</a> <a href="{{ route('product_delete', $product->id) }}" class="btn btn-default">Delete</a></td>
+                    <td><a href="{{ route('product_image_index', $product->id) }}" class="btn btn-default"><span class="glyphicon glyphicon-camera"></span></a><a href="{{ route('product_edit', $product->id) }}" class="btn btn-default">Edit</a> <a href="{{ route('product_delete', $product->id) }}" class="btn btn-default">Delete</a></td>
                 </tr>
             @endforeach
 

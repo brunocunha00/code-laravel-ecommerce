@@ -24,6 +24,13 @@ Route::group(['prefix' => '/admin'], function(){
         Route::get('/{id}/edit', ['as'=>'product_edit', 'uses' => 'AdminProductsController@edit']);
         Route::get('/{id}/delete', ['as'=>'product_delete', 'uses' => 'AdminProductsController@delete']);
 
+        Route::group(['prefix' => '{id}/images'], function(){
+            Route::get('', ['as' => 'product_image_index', 'uses' => 'AdminProductsController@indexImage']);
+            Route::get('create', ['as' => 'product_image_create', 'uses' => 'AdminProductsController@createImage']);
+            Route::post('create', ['as' => 'product_image_storage', 'uses' => 'AdminProductsController@storageImage']);
+            Route::get('delete', ['as' => 'product_image_delete', 'uses' => 'AdminProductsController@deleteImage']);
+        });
+
     });
 });
 
