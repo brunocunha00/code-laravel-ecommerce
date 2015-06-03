@@ -50,7 +50,13 @@ class AdminProductsController extends Controller{
 
     public function delete($id)
     {
-        $this->productModel->find($id)->delete();
+        $products = $this->productModel->find($id);
+        foreach ($products->images as $image)
+        {
+            Storage::disk('public_local')->delete('images/'. $image->id . '.' . $image->extension);
+        }
+        $products->delete();
+
         return redirect()->route('product_index');
     }
 
