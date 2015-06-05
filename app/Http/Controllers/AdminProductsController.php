@@ -9,6 +9,7 @@ use CodeCommerce\Product;
 use CodeCommerce\ProductImage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use CodeCommerce\Tag;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class AdminProductsController extends Controller{
@@ -29,9 +30,13 @@ class AdminProductsController extends Controller{
         return view('products.create', compact('categories'));
     }
 
-    public function storage(ProductRequest $productRequest)
+    public function storage(ProductRequest $productRequest, Tag $tagModel)
     {
-        $this->productModel->fill($productRequest->all())->save();
+        $tags = $this->createTag(explode(',', $productRequest->input('tag')), $tagModel);
+        $product = $this->productModel->fill($productRequest->all());
+        $product->save();
+        $product->tags()->sync($tags);
+
         return redirect()->route('product_index');
     }
 
@@ -42,9 +47,12 @@ class AdminProductsController extends Controller{
         return view('products.edit', compact('product', 'categories'));
     }
 
-    public function update(ProductRequest $productRequest, $id)
+    public function update(ProductRequest $productRequest, $id, Tag $tagModel)
     {
-        $this->productModel->find($id)->update($productRequest->all());
+        $tags = $this->createTag(explode(',', $productRequest->input('tag')), $tagModel);
+        $product = $this->productModel->find($id)->fill($productRequest->all());
+        $product->update();
+        $product->tags()->sync($tags);
         return redirect()->route('product_index');
     }
 
@@ -95,8 +103,18 @@ class AdminProductsController extends Controller{
         }else{
             throw new FileNotFoundException('Arquivo não encontrado');
         }
+    }
 
-
-
+    private function createTag(array $tags, Tag $tagModel)
+    {
+        foreach ($tags as $tag)
+        {
+            if($tagModel->where('name', '=', trim($tag))->exists() == 0){
+                $syncTags[] = $tagModel->create(['name' => trim($tag)])->id;
+            }else{
+                $syncTags[] = $tagModel->where('name', '=', trim($tag))->get()->first()->id;
+            }
+        }
+        return $syncTags;
     }
 }

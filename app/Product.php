@@ -18,4 +18,14 @@ class Product extends Model {
     {
         return $this->hasMany('CodeCommerce\ProductImage');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany('CodeCommerce\Tag');
+    }
+
+    public function getTagStringAttribute()
+    {
+        return implode(',', $this->tags()->lists('name'));
+    }
 }

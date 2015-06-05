@@ -29,6 +29,10 @@
         {!! Form::text('price', $product->price, ['class'=>'form-control']) !!}
     </div>
     <div class="form-group">
+        {!! Form::label('tag', 'Tags: (separe por vírgulas)') !!}
+        {!! Form::text('tag', $product->tagString, ['class'=>'form-control']) !!}
+    </div>
+    <div class="form-group">
         {!! Form::label('featured', 'Featured?') !!}
         <br>
         {!! Form::radio('featured', 1, $product->featured ) !!}
