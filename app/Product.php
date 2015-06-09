@@ -28,4 +28,13 @@ class Product extends Model {
     {
         return implode(',', $this->tags()->lists('name'));
     }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('featured', '=', 1);
+    }
+    public function scopeRecommend($query)
+    {
+        return $query->where('recommend', '=', 1);
+    }
 }

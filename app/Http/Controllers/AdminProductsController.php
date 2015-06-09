@@ -61,7 +61,7 @@ class AdminProductsController extends Controller{
         $products = $this->productModel->find($id);
         foreach ($products->images as $image)
         {
-            Storage::disk('public_local')->delete('images/'. $image->id . '.' . $image->extension);
+            Storage::disk('public_local')->delete('images/products/'. $image->id . '.' . $image->extension);
         }
         $products->delete();
 
@@ -84,7 +84,7 @@ class AdminProductsController extends Controller{
     {
         $file = $imageRequest->file('image');
         $image = $productImage->create(['product_id' => $id, 'extension' => $file->getClientOriginalExtension()]);
-        Storage::disk('public_local')->put('images/'. $image->id . '.' . $image->extension, File::get($file));
+        Storage::disk('public_local')->put('images/products/'. $image->id . '.' . $image->extension, File::get($file));
 
         return redirect()->route('product_image_index', $id);
     }
@@ -92,7 +92,7 @@ class AdminProductsController extends Controller{
     public function deleteImage($id, ProductImage $productImage)
     {
         $image = $productImage->find($id);
-        $imageName = 'images/' . $image->id . '.' . $image->extension;
+        $imageName = 'images/products/' . $image->id . '.' . $image->extension;
         $disk = Storage::disk('public_local');
         if($disk->exists($imageName)){
             $disk->delete($imageName);
@@ -109,11 +109,7 @@ class AdminProductsController extends Controller{
     {
         foreach ($tags as $tag)
         {
-            if($tagModel->where('name', '=', trim($tag))->exists() == 0){
-                $syncTags[] = $tagModel->create(['name' => trim($tag)])->id;
-            }else{
-                $syncTags[] = $tagModel->where('name', '=', trim($tag))->get()->first()->id;
-            }
+            $syncTags[] = $tagModel->firstOrCreate(['name' => trim($tag)])->id;
         }
         return $syncTags;
     }

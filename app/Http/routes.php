@@ -34,7 +34,8 @@ Route::group(['prefix' => '/admin'], function(){
     });
 });
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'StoreController@index');
+Route::get('/category/{id}', ['as' => 'category_products', 'uses' => 'StoreController@productsByCategory']);
 
 Route::get('home', 'HomeController@index');
 
