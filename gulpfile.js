@@ -18,7 +18,9 @@ elixir(function(mix) {
         'prettyPhoto.css',
         'animate.css',
         'main.css',
-        'responsive.css'
+        'responsive.css',
+        'app.css'
+
     ], 'public/css/all.css');
 
     mix.scripts([
