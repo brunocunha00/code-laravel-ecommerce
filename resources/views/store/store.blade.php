@@ -8,12 +8,7 @@
     <title>Home | E-Shop</title>
 
 
-    <link href="{{ url('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url('css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ url('css/prettyPhoto.css') }}" rel="stylesheet">
-    <link href="{{ url('css/animate.css') }}" rel="stylesheet">
-    <link href="{{ url('css/main.css') }}" rel="stylesheet">
-    <link href="{{ url('css/responsive.css') }}" rel="stylesheet">
+    <link href="{{ elixir('css/all.css') }}" rel="stylesheet">
 
 
 </head><!--/head-->
@@ -142,11 +137,7 @@
 
 
 
-<script src="{{ url('js/jquery.js') }}"></script>
-<script src="{{ url('js/bootstrap.min.js') }}"></script>
-<script src="{{ url('js/jquery.scrollUp.min.js') }}"></script>
-<script src="{{ url('js/jquery.prettyPhoto.js') }}"></script>
-<script src="{{ url('js/main.js') }}"></script>
+<script src="{{ elixir('js/all.js') }}"></script>
 
 </body>
 </html>
