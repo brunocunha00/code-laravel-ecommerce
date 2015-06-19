@@ -34,6 +34,14 @@ Route::group(['prefix' => '/admin'], function(){
     });
 });
 
+Route::group(['prefix' => '/cart'], function(){
+
+    Route::get('/', ['as' => 'cart_index', 'uses' => 'CartController@index']);
+    Route::get('/add/{id}', ['as' => 'cart_add', 'uses' => 'CartController@add']);
+    Route::get('/destroy/{id}', ['as' => 'cart_destroy', 'uses' => 'CartController@destroy']);
+    Route::get('/removeQtd/{id}', ['as' => 'cart_removeQtd', 'uses' => 'CartController@removeQtd']);
+});
+
 Route::get('/', 'StoreController@index');
 Route::get('/category/{id}', ['as' => 'store_category', 'uses' => 'StoreController@category']);
 Route::get('/product/{id}', ['as' => 'store_product', 'uses' => 'StoreController@product']);
