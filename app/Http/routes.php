@@ -2,7 +2,7 @@
 
 Route::pattern('id', '[0-9]+');
 
-Route::group(['prefix' => '/admin'], function(){
+Route::group(['prefix' => '/admin', 'middleware'=>['auth', 'auth.admin' ]], function(){
 
     Route::group(['prefix' => '/categories'], function(){
 
@@ -42,10 +42,12 @@ Route::group(['prefix' => '/cart'], function(){
     Route::get('/removeQtd/{id}', ['as' => 'cart_removeQtd', 'uses' => 'CartController@removeQtd']);
 });
 
-Route::get('/', 'StoreController@index');
+Route::get('/', ['as' => 'store_index', 'uses' => 'StoreController@index']);
 Route::get('/category/{id}', ['as' => 'store_category', 'uses' => 'StoreController@category']);
 Route::get('/product/{id}', ['as' => 'store_product', 'uses' => 'StoreController@product']);
 Route::get('/tag/{id}', ['as' => 'store_tag', 'uses' => 'StoreController@tag']);
+
+Route::get('/checkout/place', ['as' => 'checkout_place', 'uses' => 'CheckoutController@place']);
 
 Route::get('home', 'HomeController@index');
 

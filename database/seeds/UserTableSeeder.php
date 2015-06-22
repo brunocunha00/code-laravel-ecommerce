@@ -16,6 +16,12 @@ class UserTableSeeder extends Seeder{
             'email' => 'bruno@code.com',
             'password' => Hash::make(12345)
         ]);
+        User::create([
+            'name' => 'admin',
+            'email' => 'admin@code.com',
+            'is_admin' => 1,
+            'password' => Hash::make(12345)
+        ]);
 
         foreach (range(1, 5) as $i)
         {
