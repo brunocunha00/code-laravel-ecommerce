@@ -32,6 +32,11 @@ Route::group(['prefix' => '/admin', 'middleware'=>['auth', 'auth.admin' ]], func
         });
 
     });
+
+    Route::group(['prefix' => 'order'], function(){
+        Route::get('{id}/update/status', ['as' => 'order_update_status', 'uses' => 'AdminOrdersController@updateStatus']);
+        Route::get('', ['as' => 'order_index', 'uses' => 'AdminOrdersController@index']);
+    });
 });
 
 Route::group(['prefix' => '/cart'], function(){
@@ -49,7 +54,14 @@ Route::get('/tag/{id}', ['as' => 'store_tag', 'uses' => 'StoreController@tag']);
 
 Route::get('/checkout/place', ['as' => 'checkout_place', 'uses' => 'CheckoutController@place']);
 
-Route::get('home', 'HomeController@index');
+Route::group(['prefix' => '/user', 'middleware' => 'auth'], function(){
+    Route::group(['prefix' => '/profile'], function() {
+        Route::get('register', ['as' => 'profile_register', 'uses' => 'ProfileController@register']);
+        Route::post('storage', ['as' => 'profile_storage', 'uses' => 'ProfileController@storage']);
+    });
+
+    Route::get('orders', ['as' => 'user_orders', 'uses' => 'AccountController@orders']);
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
