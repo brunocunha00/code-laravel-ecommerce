@@ -48,4 +48,9 @@ class Cart {
     {
         ($this->items[$id]['qtd'] > 1) ? $this->items[$id]['qtd']-- : 1;
     }
+
+    public function clear()
+    {
+        return $this->items = [];
+    }
 }

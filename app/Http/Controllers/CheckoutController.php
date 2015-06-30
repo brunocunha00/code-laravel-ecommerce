@@ -1,5 +1,6 @@
 <?php namespace CodeCommerce\Http\Controllers;
 
+use CodeCommerce\Category;
 use CodeCommerce\Http\Requests;
 use CodeCommerce\Http\Controllers\Controller;
 
@@ -31,7 +32,9 @@ class CheckoutController extends Controller {
             foreach($cart->all() as $k => $item){
                 $order->items()->create(['product_id'=>$k,'price'=>$item['price'], 'qtd'=>$item['qtd']]);
             }
-
+            $cart->clear();
+            $categories = Category::all();
+            return view('store.checkout', compact('order', 'categories'));
         }
 
         return redirect()->route('store_index');
