@@ -36,6 +36,7 @@ class ProfileController extends Controller {
                 'city' => $profileRequest->input('city'),
                 'state' => $profileRequest->input('state'),
             ]);
-        dd($profile);
+
+        return redirect()->route('user_orders');
     }
 }
