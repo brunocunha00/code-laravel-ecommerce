@@ -4,6 +4,7 @@
         <td>#</td>
         <td>Total</td>
         <td>Status</td>
+        <td>Actions</td>
     </tr>
     </thead>
     <tbody>
@@ -18,11 +19,14 @@
             <td>
                 <p>
                     {{ $order->statusName }}
-                    @if(Auth::user()->is_admin)
-                        <a href="{{ route('order_update_status', ['id' => $order->id]) }}" class="btn btn-primary btn-xs">up</a>
-                    @endif
                 </p>
-
+            </td>
+            <td>
+                @if(Auth::user()->is_admin)
+                    <a href="{{ route('order_update_status', ['id' => $order->id]) }}" class="btn btn-primary">up</a>
+                @elseif($order->status == 0)
+                    <a href="{{ route('checkout_payment', ['id' => $order->id]) }}" class="btn btn-primary">Pay</a>
+                @endif
             </td>
         </tr>
     @empty

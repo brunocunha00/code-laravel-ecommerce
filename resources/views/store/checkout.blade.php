@@ -11,5 +11,7 @@
         <h3>Pedido #{{ $order->id }} realizado com sucesso!</h3>
 
         <h4>Valor Total: R${{ $order->total }}</h4>
+        
+        <a href="{{ route('checkout_payment', ['id' => $order->id]) }}" class="btn btn-primary">Pay</a>
     </div>
 @endsection

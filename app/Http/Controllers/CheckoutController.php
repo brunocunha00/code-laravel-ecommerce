@@ -6,9 +6,10 @@ use CodeCommerce\Http\Controllers\Controller;
 
 use CodeCommerce\Order;
 use CodeCommerce\OrderItem;
-use Illuminate\Http\Request;
+use CodeCommerce\PagSeguro;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use PHPSC\PagSeguro\Requests\Checkout\CheckoutService;
 
 class CheckoutController extends Controller {
 
@@ -39,5 +40,11 @@ class CheckoutController extends Controller {
         }
 
         return redirect()->route('store_index');
+    }
+
+    public function payment($id, Order $orderModel, PagSeguro $pagSeguro, CheckoutService $checkoutService)
+    {
+        $response = $pagSeguro->createPayment($orderModel->find($id), $checkoutService);
+        return redirect($response->getRedirectionUrl());
     }
 }

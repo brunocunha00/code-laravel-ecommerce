@@ -19,6 +19,11 @@ class Order extends Model {
         return $this->belongsTo('CodeCommerce\User');
     }
 
+    public function pagseguro()
+    {
+        return $this->hasOne('CodeCommerce\PagSeguro');
+    }
+
     public function getStatusNameAttribute()
     {
         switch($this->status){

@@ -52,7 +52,10 @@ Route::get('/category/{id}', ['as' => 'store_category', 'uses' => 'StoreControll
 Route::get('/product/{id}', ['as' => 'store_product', 'uses' => 'StoreController@product']);
 Route::get('/tag/{id}', ['as' => 'store_tag', 'uses' => 'StoreController@tag']);
 
-Route::get('/checkout/place', ['as' => 'checkout_place', 'uses' => 'CheckoutController@place']);
+Route::group(['prefix' => '/checkout', 'middleware' => 'auth'], function() {
+    Route::get('place', ['as' => 'checkout_place', 'uses' => 'CheckoutController@place']);
+    Route::get('/order/{id}/payment', ['as' => 'checkout_payment', 'uses' => 'CheckoutController@payment']);
+});
 
 Route::group(['prefix' => '/user', 'middleware' => 'auth'], function(){
     Route::group(['prefix' => '/profile'], function() {
@@ -67,3 +70,5 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('pagseguro', ['as' => 'pagseguro_index', 'uses' => 'PagSeguroController@index']);
