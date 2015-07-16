@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Request;
+
 Route::pattern('id', '[0-9]+');
 
 Route::group(['prefix' => '/admin', 'middleware'=>['auth', 'auth.admin' ]], function(){
@@ -71,4 +73,12 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-Route::get('pagseguro', ['as' => 'pagseguro_index', 'uses' => 'PagSeguroController@index']);
+Route::get('pagseguro/notification/',
+    ['as' => 'pagseguro_return', 'uses' => 'PagSeguroController@receiveNotification', ]
+);
+
+    Route::post('pagseguro/notification/',
+        ['as' => 'pagseguro_receive_notification', 'uses' => 'PagSeguroController@receiveNotification', ]
+    );
+
+

@@ -44,7 +44,7 @@ class CheckoutController extends Controller {
 
     public function payment($id, Order $orderModel, PagSeguro $pagSeguro, CheckoutService $checkoutService)
     {
-        $response = $pagSeguro->createPayment($orderModel->find($id), $checkoutService);
+        $response = $pagSeguro->createIntentPayment($orderModel->find($id), $checkoutService);
         return redirect($response->getRedirectionUrl());
     }
 }

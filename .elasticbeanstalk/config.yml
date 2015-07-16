@@ -1,0 +1,10 @@
+branch-defaults:
+  master:
+    environment: ecommerceLaravel-env
+global:
+  application_name: ecommerce-laravel
+  default_ec2_keyname: aws
+  default_platform: 64bit Amazon Linux 2015.03 v1.4.3 running PHP 5.5
+  default_region: sa-east-1
+  profile: eb-cli
+  sc: git

@@ -15,7 +15,7 @@ class CreatePagseguroPaymentsTable extends Migration {
 		Schema::create('pagseguro_payments', function(Blueprint $table)
 		{
 			$table->increments('id');
-            $table->char('code', 32);
+            $table->char('code', 36);
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders');
             $table->char('status', 1)->nullable();
