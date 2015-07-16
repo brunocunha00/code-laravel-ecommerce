@@ -1,5 +1,6 @@
 <?php namespace CodeCommerce\Http\Controllers;
 
+use CodeCommerce\Category;
 use CodeCommerce\Http\Requests;
 use CodeCommerce\PagSeguro;
 use Illuminate\Http\Request;
@@ -9,16 +10,11 @@ use PHPSC\PagSeguro\Requests\Checkout\CheckoutService;
 
 class PagSeguroController extends Controller {
 
-    public function retorno(CheckoutService $checkoutService)
+    public function returnPayment(Request $request, Locator $locator)
     {
-        $checkout = $checkoutService->createCheckoutBuilder()
-            ->addItem(new Item(1, 'Televisão LED 500', 8999.99, 4))
-            ->addItem(new Item(2, 'Video-game mega ultra blaster', 799.99))
-            ->getCheckout();
-
-        $response = $checkoutService->checkout($checkout);
-        dd($response);
-        return redirect($response->getRedirectionUrl());
+        $categories = Category::all();
+        $transaction = $locator->getByCode($request->get('code'));
+        return view('store.checkout_pagseguro', compact('transaction', 'categories'));
 	}
 
     public function receiveNotification(Request $request, PagSeguro $pagSeguroModel, Locator $locator)

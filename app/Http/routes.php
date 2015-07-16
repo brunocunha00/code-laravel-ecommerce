@@ -69,16 +69,16 @@ Route::group(['prefix' => '/user', 'middleware' => 'auth'], function(){
 });
 
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
 ]);
 
-Route::get('pagseguro/notification/',
-    ['as' => 'pagseguro_return', 'uses' => 'PagSeguroController@receiveNotification', ]
+Route::get('pagseguro/return/',
+    ['as' => 'pagseguro_return', 'uses' => 'PagSeguroController@returnPayment', ]
 );
 
-    Route::post('pagseguro/notification/',
-        ['as' => 'pagseguro_receive_notification', 'uses' => 'PagSeguroController@receiveNotification', ]
-    );
+Route::post('pagseguro/notification/',
+    ['as' => 'pagseguro_receive_notification', 'uses' => 'PagSeguroController@receiveNotification', ]
+);
 
 
